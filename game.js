@@ -147,7 +147,7 @@ function onAssetsLoaded() {
             time < lastSwapTime ||
             time > lastSwapTime + swapInterval)
         {
-            console.log(time - lastSwapTime);
+            //console.log(time - lastSwapTime);
             lastSwapTime = time;
 
             var prevTexture = currentTexture;
@@ -162,12 +162,12 @@ function onAssetsLoaded() {
         outputSprite.scale.set(0.9 + 0.2 * Math.sin(time / 800));
         outputSprite.rotation = 0.2 * Math.sin(time/2000);
         outputSprite.position.set(width/2, height/2);
-        outputSprite.alpha = 0.9;
+        outputSprite.alpha = 0.5;
 
         outputSprite2.scale.set(1.1 + 0.2 * Math.sin(-time / 800));
         outputSprite2.rotation = 0.2 * Math.sin(-time/2000);
         outputSprite2.position.set(width/2, height/2);
-        outputSprite2.alpha = 0.5;
+        outputSprite2.alpha = 0.7;
 
         renderer.render(stage);
 
