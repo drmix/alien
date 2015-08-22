@@ -7,6 +7,15 @@ $(document).ready(function() {
 });
 
 function onAssetsLoaded() {
+    var requestFrame = window.requestAnimationFrame ||
+                       window.webkitRequestAnimationFrame ||
+                       window.mozRequestAnimationFrame ||
+                       window.oRequestAnimationFrame ||
+                       window.msRequestAnimationFrame ||
+                       function(callback) {
+                           setTimeout(function() { callback(new Date().getTime()); }, 1000/60 );
+                       };
+
     var canvas = $("canvas#game")[0],
         width = +canvas.width,
         height = +canvas.height,
@@ -18,6 +27,7 @@ function onAssetsLoaded() {
 
     var stage = new PIXI.Container();
 
+
     var outputSprite = new PIXI.Sprite(currentTexture);
     outputSprite.anchor.set(0.5);
     stage.addChild(outputSprite);
@@ -25,6 +35,17 @@ function onAssetsLoaded() {
     var outputSprite2 = new PIXI.Sprite(currentTexture);
     outputSprite2.anchor.set(0.5);
     stage.addChild(outputSprite2);
+
+    var text = new PIXI.Text('Press A, D or Space', {
+        font : 'bold italic 20px Arial',
+        stroke : '#235c16',
+        strokeThickness: 3,
+        fill : '#9BC495',
+    });
+    text.x = 10;
+    text.y = 10;
+    stage.addChild(text);
+
 
     var frames = [];
 
@@ -43,25 +64,18 @@ function onAssetsLoaded() {
     var S_STAY = 0,
         S_LEFT = 1 << 0,
         S_RIGHT = 1 << 1,
-        S_TOP = 1 << 2,
-        S_BOTTOM = 1 << 3,
-        S_JUMP = 1 << 4,
+        S_JUMP = 1 << 2,
         state = S_STAY;
 
     var keyMasks = {
         "37": S_LEFT,
         "39": S_RIGHT,
-        "38": S_TOP,
-        "40": S_BOTTOM,
         "65": S_LEFT,
         "68": S_RIGHT,
-        "87": S_TOP,
-        "83": S_BOTTOM,
         "32": S_JUMP
     };
 
     $(window).keydown(function(e) {
-        console.log(e.keyCode);
         var mask = keyMasks[e.keyCode];
 
         if (typeof mask !== "undefined") {
@@ -78,12 +92,9 @@ function onAssetsLoaded() {
     var speed = 10,
         dy = 0,
         m = 1,
-        jump = -20,
+        jump = -25,
         gravity = -1,
         airResistance = 0.0001;
-
-
-
 
 
     function animate(time) {
@@ -127,9 +138,8 @@ function onAssetsLoaded() {
 
         window.cheburek = cheburek;
 
-        //cheburek.rotation += 0.01;
+        cheburek.rotation = 0.1 * Math.sin(time/1300);
 
-        // render the stage container
 
         var prevTexture = currentTexture;
         currentTexture = (currentTexture === renderTexture1) ? renderTexture2 : renderTexture1;
@@ -140,20 +150,20 @@ function onAssetsLoaded() {
         outputSprite.scale.set(0.9 + 0.2 * Math.sin(time / 800));
         outputSprite.rotation = 0.2 * Math.sin(time/2000);
         outputSprite.position.set(width/2, height/2);
-        outputSprite.alpha = 0.9;
+        outputSprite.alpha = 0.8;
 
         outputSprite2.texture = currentTexture;
         outputSprite2.scale.set(1.1 + 0.2 * Math.sin(-time / 800));
         outputSprite2.rotation = 0.2 * Math.sin(-time/2000);
         outputSprite2.position.set(width/2, height/2);
-        outputSprite2.alpha = 0.9;
+        outputSprite2.alpha = 0.8;
 
         renderer.render(stage);
 
-        requestAnimationFrame(animate);
+        requestFrame(animate);
     }
 
-    requestAnimationFrame(animate);
+    requestFrame(animate);
 }
 
 
