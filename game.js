@@ -12,7 +12,20 @@ function onAssetsLoaded() {
         height = +canvas.height,
         renderer = PIXI.autoDetectRenderer(width, height, {view: canvas});
 
+    var renderTexture1 = new PIXI.RenderTexture(renderer, renderer.width, renderer.height),
+        renderTexture2 = new PIXI.RenderTexture(renderer, renderer.width, renderer.height),
+        currentTexture = renderTexture1;
+
     var stage = new PIXI.Container();
+
+    var outputSprite = new PIXI.Sprite(currentTexture);
+    outputSprite.anchor.set(0.5);
+    stage.addChild(outputSprite);
+
+    var outputSprite2 = new PIXI.Sprite(currentTexture);
+    outputSprite2.anchor.set(0.5);
+    stage.addChild(outputSprite2);
+
     var frames = [];
 
     for (var i = 0; i < 4; i++) {
@@ -69,7 +82,11 @@ function onAssetsLoaded() {
         gravity = -1,
         airResistance = 0.0001;
 
-    function animate() {
+
+
+
+
+    function animate(time) {
         var ch = cheburek.height / 2,
             cw = cheburek.width / 2;
 
@@ -113,12 +130,30 @@ function onAssetsLoaded() {
         //cheburek.rotation += 0.01;
 
         // render the stage container
+
+        var prevTexture = currentTexture;
+        currentTexture = (currentTexture === renderTexture1) ? renderTexture2 : renderTexture1;
+
+        prevTexture.render(stage, null, false);
+
+        outputSprite.texture = currentTexture;
+        outputSprite.scale.set(0.9 + 0.2 * Math.sin(time / 800));
+        outputSprite.rotation = 0.2 * Math.sin(time/2000);
+        outputSprite.position.set(width/2, height/2);
+        outputSprite.alpha = 0.9;
+
+        outputSprite2.texture = currentTexture;
+        outputSprite2.scale.set(1.1 + 0.2 * Math.sin(-time / 800));
+        outputSprite2.rotation = 0.2 * Math.sin(-time/2000);
+        outputSprite2.position.set(width/2, height/2);
+        outputSprite2.alpha = 0.9;
+
         renderer.render(stage);
 
         requestAnimationFrame(animate);
     }
 
-    animate();
+    requestAnimationFrame(animate);
 }
 
 
