@@ -32,16 +32,23 @@ function onAssetsLoaded() {
         S_RIGHT = 1 << 1,
         S_TOP = 1 << 2,
         S_BOTTOM = 1 << 3,
+        S_JUMP = 1 << 4,
         state = S_STAY;
 
     var keyMasks = {
         "37": S_LEFT,
         "39": S_RIGHT,
         "38": S_TOP,
-        "40": S_BOTTOM
+        "40": S_BOTTOM,
+        "65": S_LEFT,
+        "68": S_RIGHT,
+        "87": S_TOP,
+        "83": S_BOTTOM,
+        "32": S_JUMP
     };
 
     $(window).keydown(function(e) {
+        console.log(e.keyCode);
         var mask = keyMasks[e.keyCode];
 
         if (typeof mask !== "undefined") {
@@ -55,13 +62,35 @@ function onAssetsLoaded() {
         }
     });
 
-    var speed = 10;
+    var speed = 10,
+        dy = 0,
+        m = 1,
+        jump = -20,
+        gravity = -1,
+        airResistance = 0.0001;
 
     function animate() {
         var ch = cheburek.height / 2,
             cw = cheburek.width / 2;
 
-        cheburek.position.y = height - ch;
+        var y = cheburek.position.y + dy;
+
+        if (y < ch) {
+            y = 0;
+            dy = 0;
+        } else if (y > height - ch) {
+            y = height - ch;
+            dy = 0;
+        }
+
+        if (y == height - ch && (state & S_JUMP)) {
+            dy = jump;
+        }
+
+        dy += -dy * airResistance - gravity * m;
+
+        cheburek.position.y = y;
+
 
         var x = cheburek.position.x,
             x1 = x;
@@ -80,8 +109,6 @@ function onAssetsLoaded() {
         cheburek.position.x = x1;
 
         window.cheburek = cheburek;
-
-        
 
         //cheburek.rotation += 0.01;
 
