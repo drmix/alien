@@ -153,21 +153,21 @@ function onAssetsLoaded() {
             var prevTexture = currentTexture;
             currentTexture = (currentTexture === renderTexture1) ? renderTexture2 : renderTexture1;
 
-            prevTexture.render(stage, null, false);
-
             outputSprite.texture = currentTexture;
             outputSprite2.texture = currentTexture;
+
+            prevTexture.render(stage, null, false);
         }
 
         outputSprite.scale.set(0.9 + 0.2 * Math.sin(time / 800));
         outputSprite.rotation = 0.2 * Math.sin(time/2000);
         outputSprite.position.set(width/2, height/2);
-        outputSprite.alpha = 0.8;
+        outputSprite.alpha = 0.9;
 
         outputSprite2.scale.set(1.1 + 0.2 * Math.sin(-time / 800));
         outputSprite2.rotation = 0.2 * Math.sin(-time/2000);
         outputSprite2.position.set(width/2, height/2);
-        outputSprite2.alpha = 0.8;
+        outputSprite2.alpha = 0.5;
 
         renderer.render(stage);
 
