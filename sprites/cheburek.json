@@ -1,0 +1,43 @@
+﻿{"frames": {
+
+"cheburek0000":
+{
+	"frame": {"x":5,"y":5,"w":199,"h":160},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":0,"w":206,"h":160},
+	"sourceSize": {"w":206,"h":160}
+},
+"cheburek0001":
+{
+	"frame": {"x":204,"y":5,"w":195,"h":160},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":206,"h":160},
+	"sourceSize": {"w":206,"h":160}
+},
+"cheburek0002":
+{
+	"frame": {"x":5,"y":165,"w":199,"h":160},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":0,"w":206,"h":160},
+	"sourceSize": {"w":206,"h":160}
+},
+"cheburek0003":
+{
+	"frame": {"x":204,"y":165,"w":202,"h":160},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":4,"y":0,"w":206,"h":160},
+	"sourceSize": {"w":206,"h":160}
+}},
+"meta": {
+	"app": "Adobe Flash Professional",
+	"version": "15.0.1.179",
+	"image": "cheburek.png",
+	"format": "RGBA8888",
+	"size": {"w":512,"h":512},
+	"scale": "1"
+}
+}
